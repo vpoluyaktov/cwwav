@@ -12,6 +12,9 @@ by the spoken character.
 	* generate.py generates wav files for the morse and spoken character
 	* makePractice.py makes a wav file with random sequences of letters
 	
+Original Readme
+===============
+
 Copyright (C) 2011 by Thomas Horsten
 
 This program is free software: you can redistribute it and/or modify
