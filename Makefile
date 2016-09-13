@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=
+CFLAGS=-I/usr/local/include -L/usr/local/lib
 LDLIBS=-lm -lsndfile
 
 ifeq ($(LAME),1)
