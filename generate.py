@@ -6,7 +6,7 @@ import random
 
 def main():
 	makeSilence(0.4, "morseLetterGap")
-	makeSilence(1.5, "interLetterGap")
+	makeSilence(1.1, "interLetterGap")
 
 	allChars = string.ascii_lowercase + string.digits
 	for letter in allChars:

@@ -455,7 +455,8 @@ void setup_output()
 	}
 #endif
 }
-int text_to_morse(FILE *f) {
+
+void text_to_morse(FILE *f) {
 	int space = 0;
 	int nl = 0;
 	wint_t c;
@@ -474,7 +475,7 @@ int text_to_morse(FILE *f) {
 		}
 		if (nl > 1) {
 			space=0;
-			if (nl == 2) {	
+			if (nl == 2) {
 				dprintf("Paragraph break\n");
 				send_space(14);
 			} else {
