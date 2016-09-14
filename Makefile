@@ -16,6 +16,7 @@ all: cwwav
 
 clean:
 	rm cwwav
+	rm *.wav
 
 install: all
 	install -d /usr/local/bin
