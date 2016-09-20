@@ -9,7 +9,7 @@ LETTER_REPEATS = 3
 
 
 def main():
-    sequenceLength = 600
+    sequenceLength = 1000
     intermediateCount = sequenceLength / MAX_SOX_FILES / LETTER_REPEATS
     for i in range(intermediateCount):
         makePracticeSequence(MAX_SOX_FILES, i)
