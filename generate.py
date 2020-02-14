@@ -1,13 +1,14 @@
 #!/usr/bin/python
 
 import os
+import sys
 import string
 import random
 
 
 VOICE = 'Will Infovox iVox HQ' # 'Alex'
 
-WAV_DIR = './wav'
+WAV_DIR = './wavs'
 OUTPUT_DIR = './output'
 
 NAVY_ALPHABET = {
@@ -61,30 +62,32 @@ def main():
     makeSilence(1.1, "interLetterGap")
 
     allChars = string.ascii_lowercase + string.digits
+    sys.stdout.write("Generating .wav files for the letter    ")
+    sys.stdout.flush()
     for letter in allChars:
+        sys.stdout.write("\b\b\b" + letter + "  ")
+        sys.stdout.flush()
         morseLetter(letter)
         speakLetter(letter)
         speakNavy(letter)
 
+    print "\nDone"
+
 def morseLetter(letter):
-    print letter
-    cmd = "echo \"%s\" |./cwwav -r 22050 --wpm 20 -o %s/morse_%s.wav" % (letter, WAV_DIR, letter)
+
+    cmd = "echo \"%s\" |./cwwav -r 22050 --wpm 20 -o %s/morse_%s.wav 2> /dev/null" % (letter, WAV_DIR, letter)
     os.system(cmd)
 
 def speakLetter(letter):
-    cmd = "say '%s' -v '%s' -o %s/say_%s.wav" % (letter, VOICE, WAV_DIR, letter)
+    cmd = "say '%s' -v '%s' --data-format=LEF32@22050 -o %s/say_%s.wav" % (letter, VOICE, WAV_DIR, letter)
     os.system(cmd)
 
 def speakNavy(letter):
     if letter in NAVY_ALPHABET.keys() :
-        cmd = "say '%s' -v '%s' -o say_navy_%s.aiff" % (NAVY_ALPHABET[letter], VOICE, letter)
-        os.system(cmd)
-        cmd = "sox -r 22050 say_navy_%s.aiff say_navy_%s.wav" % (letter, letter)
-        os.system(cmd)
-        cmd = "rm say_navy_%s.aiff" % (letter)
-        os.system(cmd)
+        cmd = "say '%s' -v '%s' --data-format=LEF32@22050 -o %s/say_navy_%s.wav" % (NAVY_ALPHABET[letter], VOICE, WAV_DIR, letter)
     else:
-        cmd = "cp morseLetterGap.wav %s/say_navy_%s.wav" % (WAV_DIR, letter)
+        cmd = "cp %s/morseLetterGap.wav %s/say_navy_%s.wav" % (WAV_DIR, WAV_DIR, letter)
+    os.system(cmd)
 
 def makeSilence(length, name):
     cmd = "sox -r 22050 -n %s/%s.wav trim 0.0 %f" % (WAV_DIR, name, length)
