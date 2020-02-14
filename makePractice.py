@@ -7,6 +7,8 @@ import random
 MAX_SOX_FILES = 50  # sox can't catenate more than this many files
 LETTER_REPEATS = 3
 
+WAV_DIR = './wavs'
+OUTPUT_DIR = './output'
 
 def main():
     sequenceLength = 1000
@@ -16,6 +18,7 @@ def main():
 
     mergeIntermediate(intermediateCount)
     makeMp3Output()
+    cleanUp()
     print("done")
 
 def makePracticeSequence(letterCount, index):
@@ -25,25 +28,29 @@ def makePracticeSequence(letterCount, index):
     for i in range(letterCount / LETTER_REPEATS):
         character = allChars[random.randint(0, charCount - 1)]
         for j in range(LETTER_REPEATS):
-            cmd += "morse_%s.wav " % (character)
-            cmd += "morseLetterGap.wav "
-            cmd += "say_%s.wav " % (character)
-            cmd += "interLetterGap.wav "
-    cmd += "practice%02d.wav" % (index)
-    print(cmd)
+            cmd += "%s/morse_%s.wav " % (WAV_DIR, character)
+            cmd += "%s/morseLetterGap.wav " % (WAV_DIR)
+            cmd += "%s/say_%s.wav " % (WAV_DIR, character)
+            cmd += "%s/interLetterGap.wav " % (WAV_DIR)
+    cmd += "%s/practice%02d.wav" % (OUTPUT_DIR, index)
+    # print(cmd)
     os.system(cmd)
 
 
 def mergeIntermediate(count):
     cmd = "sox "
     for i in range(count):
-        cmd += "practice%02d.wav " % (i)
-    cmd += "practice_out.wav"
-    print(cmd)
+        cmd += "%s/practice%02d.wav " % (OUTPUT_DIR, i)
+    cmd += "%s/practice_out.wav" % (OUTPUT_DIR)
+    # print(cmd)
     os.system(cmd)
 
 def makeMp3Output():
-    cmd = "lame practice_out.wav practice_out.mp3"
+    cmd = "lame %s/practice_out.wav %s/practice_out.mp3" % (OUTPUT_DIR, OUTPUT_DIR)
+    os.system(cmd)
+
+def cleanUp():
+    cmd = "rm %s/*.wav" % (OUTPUT_DIR)
     os.system(cmd)
 
 if __name__ == "__main__":
