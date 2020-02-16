@@ -20,7 +20,7 @@ def main():
     for index in range(charCount):
         makeAlphabetLetter(index)
 
-    mergeIntermediate(index)
+    mergeIntermediate(index + 1)
     makeMp3Output()
     cleanUp()
     print("done")

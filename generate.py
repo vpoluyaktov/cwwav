@@ -6,8 +6,8 @@ import string
 import random
 
 # VOICE = 'Alex'
-# VOICE = 'Will Infovox iVox HQ'
-VOICE = 'Heather Infovox iVox HQ'
+VOICE = 'Will Infovox iVox HQ'
+# VOICE = 'Heather Infovox iVox HQ'
 
 WAV_DIR = './wavs'
 
